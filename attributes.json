@@ -1,0 +1,103 @@
+{
+  "schema": {
+    "audit_log": {
+      "type": "boolean"
+    },
+    "certificate_used": {
+      "type": "boolean"
+    },
+    "component_inventory": {
+      "type": "boolean"
+    },
+    "configuration_existence": {
+      "type": "boolean"
+    },
+    "cryptography_used": {
+      "type": "boolean"
+    },
+    "encryption": {
+      "type": "boolean"
+    },
+    "is_human": {
+      "type": "boolean"
+    },
+    "tls_used": {
+      "type": "boolean"
+    },
+    "password_length": {
+      "type": "integer",
+      "min": 1,
+      "max": 128
+    },
+    "identification_scheme": {
+      "type": "list",
+      "enum": [
+        "IP",
+        "MAC",
+        "uCode"
+      ]
+    },
+    "identifier": {
+      "type": "list"
+    },
+    "monitoring_configuration": {
+      "type": "list"
+    },
+    "protocol_type": {
+      "type": "list",
+      "enum": [
+        "MQTT",
+        "OPCUA",
+        "MODBUS",
+        "Kerberos",
+        "EAP",
+        "HTTP",
+        "HTTPS",
+        "TLS",
+        "SSH",
+        "SMB",
+        "BACNET",
+        "DNS",
+        "NTP",
+        "AMQP",
+        "COAP"
+      ]
+    },
+    "ip": {
+      "type": "string"
+    },
+    "ipv4": {
+      "type": "string"
+    },
+    "ipv6": {
+      "type": "string"
+    },
+    "mac": {
+      "type": "string"
+    },
+    "os": {
+      "type": "string"
+    },
+    "os_version": {
+      "type": "string"
+    },
+    "src_port": {
+      "type": "integer",
+      "min": 1,
+      "max": 65535
+    },
+    "dst_port": {
+      "type": "integer",
+      "min": 1,
+      "max": 65535
+    },
+    "proto": {
+      "type": "string",
+      "enum": [
+        "tcp",
+        "udp",
+        "any"
+      ]
+    }
+  }
+}

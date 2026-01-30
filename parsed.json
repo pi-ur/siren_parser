@@ -1,0 +1,125 @@
+{
+  "participants": {
+    "Participant_0p6se2u": {
+      "name": "Heating oven",
+      "processRef": "Process_0mz2o77",
+      "bi": {
+        "ip": "172.217.168.238",
+        "ipv6": "2001:0db8:3c4d:0015:0",
+        "os": "Windows NT",
+        "os_version": "1.5",
+        "mac": "00:80:41:ae:fd:7e"
+      },
+      "controls": {
+        "is_human": true,
+        "id_exists": true,
+        "protocol_type": [
+          "MQTT"
+        ],
+        "encryption": true,
+        "physical_segment": true,
+        "audit_logs": true
+      }
+    },
+    "Participant_0v6zp7v": {
+      "name": "Process Control System",
+      "processRef": "Process_0vpf3hp",
+      "bi": {
+        "ip": "172.217.168.239",
+        "ipv6": "2001:0db8:3c4d:0015:0",
+        "os": "Windows NT",
+        "os_version": "1.5",
+        "mac": "6A:3D:B2:9F:44:C1"
+      },
+      "controls": {}
+    }
+  },
+  "nodes": {
+    "Activity_07pi8q2": {
+      "name": "Transport component to preheating furnace",
+      "process_id": "Process_0mz2o77",
+      "participant_id": "Participant_0p6se2u",
+      "controls": {}
+    },
+    "Activity_1ova196": {
+      "name": "Heat component in preheating oven (85\u00b0C)",
+      "process_id": "Process_0mz2o77",
+      "participant_id": "Participant_0p6se2u",
+      "controls": {}
+    },
+    "Activity_1a5eax0": {
+      "name": "Pour in the mixture",
+      "process_id": "Process_0mz2o77",
+      "participant_id": "Participant_0p6se2u",
+      "controls": {}
+    },
+    "Activity_093clju": {
+      "name": "Check the outlet height",
+      "process_id": "Process_0mz2o77",
+      "participant_id": "Participant_0p6se2u",
+      "controls": {}
+    },
+    "Activity_19pteo7": {
+      "name": "Book component on product carrier",
+      "process_id": "Process_0mz2o77",
+      "participant_id": "Participant_0p6se2u",
+      "controls": {}
+    },
+    "Activity_08i29hj": {
+      "name": "Heat part in reheating oven (85\u00b0C)",
+      "process_id": "Process_0mz2o77",
+      "participant_id": "Participant_0p6se2u",
+      "controls": {}
+    },
+    "Activity_0z6tf9n": {
+      "name": "Route component to reject box",
+      "process_id": "Process_0mz2o77",
+      "participant_id": "Participant_0p6se2u",
+      "controls": {}
+    },
+    "Event_0l4qp2y": {
+      "name": "Insert component",
+      "process_id": "Process_0mz2o77",
+      "participant_id": "Participant_0p6se2u",
+      "controls": {}
+    },
+    "Event_0fyrw3h": {
+      "name": "Moulded component",
+      "process_id": "Process_0mz2o77",
+      "participant_id": "Participant_0p6se2u",
+      "controls": {}
+    },
+    "Event_0wc0zij": {
+      "name": "Component leaves process",
+      "process_id": "Process_0mz2o77",
+      "participant_id": "Participant_0p6se2u",
+      "controls": {}
+    },
+    "Event_0ud5i6x": {
+      "name": "Send component ID",
+      "process_id": "Process_0mz2o77",
+      "participant_id": "Participant_0p6se2u",
+      "controls": {}
+    },
+    "Event_1afykvp": {
+      "name": "25 -30 Minutes",
+      "process_id": "Process_0mz2o77",
+      "participant_id": "Participant_0p6se2u",
+      "controls": {}
+    },
+    "Event_0xetwf5": {
+      "name": "Cool down\n4 Hours",
+      "process_id": "Process_0mz2o77",
+      "participant_id": "Participant_0p6se2u",
+      "controls": {}
+    }
+  },
+  "message_flows": [
+    {
+      "id": "Flow_04edf0b",
+      "name": "",
+      "sourceRef": "Event_0ud5i6x",
+      "targetRef": "Participant_0v6zp7v"
+    }
+  ]
+}

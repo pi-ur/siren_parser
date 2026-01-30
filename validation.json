@@ -1,0 +1,22 @@
+{
+  "unknown_attributes": [
+    {
+      "where": "participant.controls",
+      "id": "Participant_0p6se2u",
+      "attribute": "id_exists"
+    },
+    {
+      "where": "participant.controls",
+      "id": "Participant_0p6se2u",
+      "attribute": "physical_segment"
+    },
+    {
+      "where": "participant.controls",
+      "id": "Participant_0p6se2u",
+      "attribute": "audit_logs"
+    }
+  ],
+  "type_mismatch": [],
+  "enum_violation": [],
+  "range_violation": []
+}

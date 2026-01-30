@@ -1,0 +1,329 @@
+[
+  {
+    "name": "encryption_required_no_tls",
+    "scope": "communication",
+    "when_all": [
+      {
+        "attribute": "encryption",
+        "equals": true
+      }
+    ],
+    "bidirectional": true,
+    "template": "alert {proto} {src_ip} {src_port} -> {dst_ip} {dst_port} (msg:\"Cleartext while encryption required {src_name}->{dst_name}\"; app-layer-protocol:!tls; sid:{sid}; rev:1;)"
+  },
+  {
+    "name": "tls_expected_non_tls_observed",
+    "scope": "communication",
+    "when_all": [
+      {
+        "attribute": "tls_used",
+        "equals": true
+      }
+    ],
+    "bidirectional": true,
+    "template": "alert {proto} {src_ip} {src_port} -> {dst_ip} {dst_port} (msg:\"Non-TLS observed though tls_used=true {src_name}->{dst_name}\"; app-layer-protocol:!tls; sid:{sid}; rev:1;)"
+  },
+  {
+    "name": "mqtt_detect_1883",
+    "scope": "communication",
+    "when_any": [
+      {
+        "attribute": "protocol_type",
+        "in": [
+          "MQTT"
+        ]
+      }
+    ],
+    "bidirectional": true,
+    "defaults": {
+      "dst_port": 1883,
+      "proto": "tcp"
+    },
+    "template": "alert tcp {src_ip} any -> {dst_ip} 1883 (msg:\"MQTT (1883) {src_name}->{dst_name}\"; flow:to_server; sid:{sid}; rev:1;)"
+  },
+  {
+    "name": "mqtt_tls_detect_8883",
+    "scope": "communication",
+    "when_all": [
+      {
+        "attribute": "protocol_type",
+        "in": [
+          "MQTT"
+        ]
+      },
+      {
+        "attribute": "tls_used",
+        "equals": true
+      }
+    ],
+    "bidirectional": true,
+    "template": "alert tcp {src_ip} any -> {dst_ip} 8883 (msg:\"MQTT over TLS (8883) {src_name}->{dst_name}\"; flow:to_server; sid:{sid}; rev:1;)"
+  },
+  {
+    "name": "mqtt_plain_violation_when_tls_required",
+    "scope": "communication",
+    "when_all": [
+      {
+        "attribute": "protocol_type",
+        "in": [
+          "MQTT"
+        ]
+      },
+      {
+        "attribute": "tls_used",
+        "equals": true
+      }
+    ],
+    "bidirectional": true,
+    "template": "alert tcp {src_ip} any -> {dst_ip} 1883 (msg:\"Violation: MQTT plaintext while TLS required {src_name}->{dst_name}\"; sid:{sid}; rev:1;)"
+  },
+  {
+    "name": "opcua_detect",
+    "scope": "communication",
+    "when_any": [
+      {
+        "attribute": "protocol_type",
+        "in": [
+          "OPCUA",
+          "OPC_UA",
+          "OPC-UA",
+          "OPC UA"
+        ]
+      }
+    ],
+    "bidirectional": true,
+    "template": "alert tcp {src_ip} any -> {dst_ip} 4840 (msg:\"OPC UA {src_name}->{dst_name}\"; sid:{sid}; rev:1;)"
+  },
+  {
+    "name": "modbus_detect",
+    "scope": "communication",
+    "when_any": [
+      {
+        "attribute": "protocol_type",
+        "in": [
+          "MODBUS",
+          "MODBUS_TCP",
+          "Modbus",
+          "ModbusTCP"
+        ]
+      }
+    ],
+    "bidirectional": true,
+    "template": "alert tcp {src_ip} any -> {dst_ip} 502 (msg:\"Modbus TCP {src_name}->{dst_name}\"; sid:{sid}; rev:1;)"
+  },
+  {
+    "name": "http_detect",
+    "scope": "communication",
+    "when_any": [
+      {
+        "attribute": "protocol_type",
+        "in": [
+          "HTTP"
+        ]
+      }
+    ],
+    "bidirectional": true,
+    "template": "alert tcp {src_ip} any -> {dst_ip} 80 (msg:\"HTTP {src_name}->{dst_name}\"; flow:to_server; sid:{sid}; rev:1;)"
+  },
+  {
+    "name": "https_detect",
+    "scope": "communication",
+    "when_any": [
+      {
+        "attribute": "protocol_type",
+        "in": [
+          "HTTPS",
+          "TLS"
+        ]
+      }
+    ],
+    "bidirectional": true,
+    "template": "alert tcp {src_ip} any -> {dst_ip} 443 (msg:\"HTTPS/TLS {src_name}->{dst_name}\"; flow:to_server; sid:{sid}; rev:1;)"
+  },
+  {
+    "name": "http_violation_when_encryption_required",
+    "scope": "communication",
+    "when_all": [
+      {
+        "attribute": "encryption",
+        "equals": true
+      },
+      {
+        "attribute": "protocol_type",
+        "in": [
+          "HTTP"
+        ]
+      }
+    ],
+    "bidirectional": true,
+    "template": "alert tcp {src_ip} any -> {dst_ip} 80 (msg:\"Violation: HTTP while encryption required {src_name}->{dst_name}\"; sid:{sid}; rev:1;)"
+  },
+  {
+    "name": "kerberos_detect",
+    "scope": "communication",
+    "when_any": [
+      {
+        "attribute": "protocol_type",
+        "in": [
+          "Kerberos"
+        ]
+      }
+    ],
+    "bidirectional": true,
+    "template": "alert tcp {src_ip} any -> {dst_ip} 88 (msg:\"Kerberos {src_name}->{dst_name}\"; sid:{sid}; rev:1;)"
+  },
+  {
+    "name": "eap_detect",
+    "scope": "communication",
+    "when_any": [
+      {
+        "attribute": "protocol_type",
+        "in": [
+          "EAP"
+        ]
+      }
+    ],
+    "bidirectional": true,
+    "template": "alert udp {src_ip} any -> {dst_ip} any (msg:\"EAP {src_name}->{dst_name}\"; sid:{sid}; rev:1;)"
+  },
+  {
+    "name": "ssh_detect",
+    "scope": "communication",
+    "when_any": [
+      {
+        "attribute": "protocol_type",
+        "in": [
+          "SSH"
+        ]
+      }
+    ],
+    "bidirectional": true,
+    "template": "alert tcp {src_ip} any -> {dst_ip} 22 (msg:\"SSH {src_name}->{dst_name}\"; sid:{sid}; rev:1;)"
+  },
+  {
+    "name": "smb_detect",
+    "scope": "communication",
+    "when_any": [
+      {
+        "attribute": "protocol_type",
+        "in": [
+          "SMB",
+          "CIFS"
+        ]
+      }
+    ],
+    "bidirectional": true,
+    "template": "alert tcp {src_ip} any -> {dst_ip} 445 (msg:\"SMB {src_name}->{dst_name}\"; sid:{sid}; rev:1;)"
+  },
+  {
+    "name": "bacnet_detect",
+    "scope": "communication",
+    "when_any": [
+      {
+        "attribute": "protocol_type",
+        "in": [
+          "BACNET",
+          "BACnet"
+        ]
+      }
+    ],
+    "bidirectional": true,
+    "template": "alert udp {src_ip} any -> {dst_ip} 47808 (msg:\"BACnet {src_name}->{dst_name}\"; sid:{sid}; rev:1;)"
+  },
+  {
+    "name": "dns_detect",
+    "scope": "communication",
+    "when_any": [
+      {
+        "attribute": "protocol_type",
+        "in": [
+          "DNS"
+        ]
+      }
+    ],
+    "bidirectional": true,
+    "template": "alert udp {src_ip} any -> {dst_ip} 53 (msg:\"DNS {src_name}->{dst_name}\"; sid:{sid}; rev:1;)"
+  },
+  {
+    "name": "ntp_detect",
+    "scope": "communication",
+    "when_any": [
+      {
+        "attribute": "protocol_type",
+        "in": [
+          "NTP"
+        ]
+      }
+    ],
+    "bidirectional": true,
+    "template": "alert udp {src_ip} any -> {dst_ip} 123 (msg:\"NTP {src_name}->{dst_name}\"; sid:{sid}; rev:1;)"
+  },
+  {
+    "name": "task_requires_human_confirmation",
+    "scope": "task",
+    "when_all": [
+      {
+        "attribute": "is_human",
+        "equals": true
+      }
+    ],
+    "template": "alert ip any any -> any any (msg:\"TASK control: requires human confirmation 'is_human=true' on task '{task_name}' in {participant_name}\"; sid:{sid}; rev:1;)"
+  },
+  {
+    "name": "task_password_policy_length",
+    "scope": "task",
+    "when_all": [
+      {
+        "attribute": "password_length",
+        "gte": 12
+      }
+    ],
+    "template": "alert ip any any -> any any (msg:\"TASK control: password_length>={password_length} required on '{task_name}' in {participant_name}\"; sid:{sid}; rev:1;)"
+  },
+  {
+    "name": "resource_requires_tls",
+    "scope": "resource",
+    "when_all": [
+      {
+        "attribute": "tls_used",
+        "equals": true
+      }
+    ],
+    "template": "alert ip any any -> {dst_ip} any (msg:\"RESOURCE control: tls_used=true expected for {participant_name}\"; sid:{sid}; rev:1;)"
+  },
+  {
+    "name": "resource_audit_log_enabled",
+    "scope": "resource",
+    "when_all": [
+      {
+        "attribute": "audit_log",
+        "equals": true
+      }
+    ],
+    "template": "alert ip any any -> {dst_ip} any (msg:\"RESOURCE control: audit_log=true for {participant_name}\"; sid:{sid}; rev:1;)"
+  },
+  {
+    "name": "encryption_compliant_tls_pass",
+    "scope": "communication",
+    "when_all": [
+      {
+        "attribute": "encryption",
+        "equals": true
+      }
+    ],
+    "bidirectional": true,
+    "template": "pass tls {src_ip} any -> {dst_ip} any (msg:\"Compliant: TLS encryption detected {src_name}->{dst_name}\"; app-layer-protocol:tls; sid:{sid}; rev:1;)"
+  },
+  {
+    "name": "crypto_compliant_tls_pass",
+    "scope": "communication",
+    "when_all": [
+      {
+        "attribute": "cryptography_used",
+        "equals": true
+      }
+    ],
+    "bidirectional": true,
+    "template": "pass tls {src_ip} any -> {dst_ip} any (msg:\"Compliant: cryptography_used=true (TLS) {src_name}->{dst_name}\"; app-layer-protocol:tls; sid:{sid}; rev:1;)"
+  }
+]
